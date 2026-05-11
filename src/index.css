@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  /* Karena font sudah di-load di HTML, kita tinggal panggil namanya di sini */
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased tracking-wide leading-relaxed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
