@@ -19,7 +19,7 @@ const members = [
     name: "H. Amiruddin",
     role: "BENDAHARA DPD KNPI Kutai Barat",
     initials: "AM",
-    photo: null,
+    photo: "Bendahara.jpeg",
     color: "#FFD66B",
   },
 ];

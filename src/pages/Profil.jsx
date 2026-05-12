@@ -26,7 +26,7 @@ const dataStruktur = [
         name: "H. Amiruddin",
         role: "BENDAHARA DPD KNPI KUTAI BARAT",
         initials: "AM",
-        photo: null,
+        photo: "Bendahara.jpeg",
       },
     ],
   },
