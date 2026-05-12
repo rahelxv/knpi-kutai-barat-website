@@ -1,25 +1,30 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
-import HeroCarousel from "./components/HeroCarousel";
-import Proker from "./components/Proker";
-import Berita from "./components/Berita";
 import Footer from "./components/Footer";
+import Beranda from "./pages/Beranda";
+import Profil from "./pages/Profil";
+import BeritaPage from "./pages/Berita_pages";
+import KegiatanPage from "./pages/Kegiatan_pages";
+import KegiatanDetail from "./pages/KegiatanDetail";
 function App() {
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-slate-50 min-h-screen flex flex-col">
       <Navbar />
-      {/* Bungkus dengan div atau tambahkan ID langsung jika komponen mendukung */}
-      <div id="beranda">
-        <HeroCarousel />
-      </div>
-      <div id="proker">
-        <Proker />
-      </div>
-      <div id="berita">
-        <Berita />
-      </div>
+
+      <main className="grow">
+        <Routes>
+          <Route path="/" element={<Beranda />} />
+          <Route path="/profil" element={<Profil />} />
+          <Route path="/berita" element={<BeritaPage />} />
+          <Route path="/kegiatan" element={<KegiatanPage />} />{" "}
+          {/* Route Kegiatan */}
+          <Route path="/kegiatan/:id" element={<KegiatanDetail />} />
+        </Routes>
+      </main>
+
       <Footer />
     </div>
   );
 }
+
 export default App;

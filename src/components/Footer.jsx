@@ -2,10 +2,7 @@
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-
-  // Ganti dengan email resmi organisasi
-  const emailAddress = "knpikutatibarat@example.com";
-  // Ganti dengan link embed asli kantor KNPI Kubar
+  const emailAddress = "#";
   const mapUrl =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.825619717!2d115.6946!3d-0.2285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df90f6797f1f9f7%3A0x4030bf45bc373b0!2sSendawar%2C%20Kec.%20Barong%20Tongkok%2C%20Kabupaten%20Kutai%20Barat%2C%20Kalimantan%20Timur!5e0!3m2!1sid!2sid!4v1715431234567!5m2!1sid!2sid";
 
@@ -72,22 +69,28 @@ export default function Footer() {
           <div className="flex flex-col gap-6 pt-4 border-t border-white/10">
             <div className="flex justify-center gap-8">
               <a
-                href="#"
-                className="hover:text-[#FFD66B] transition-colors font-bold text-sm"
-              >
-                Instagram
-              </a>
-              <a
-                href="#"
+                href="https://www.facebook.com/share/1BZftu1JTu/"
                 className="hover:text-[#FFD66B] transition-colors font-bold text-sm"
               >
                 Facebook
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@knpikutaibarat"
                 className="hover:text-[#FFD66B] transition-colors font-bold text-sm"
               >
-                YouTube
+                Youtube
+              </a>
+              <a
+                href="https://x.com/knpikutaibarat"
+                className="hover:text-[#FFD66B] transition-colors font-bold text-sm"
+              >
+                X
+              </a>
+              <a
+                href="https://www.tiktok.com/@knpi.kutai.barat"
+                className="hover:text-[#FFD66B] transition-colors font-bold text-sm"
+              >
+                Tiktok
               </a>
             </div>
             {/* TOMBOL EMAIL KHUSUS */}

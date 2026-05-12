@@ -1,103 +1,116 @@
-// components/Berita.jsx
-
-const newsList = [
-  {
-    id: 1,
-    title: "Pelantikan Pengurus KNPI Kutai Barat Periode 2026-2029",
-    date: "10 Mei 2026",
-    category: "Kegiatan",
-    image:
-      "https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=500&auto=format&fit=crop", // Ganti dengan foto asli
-  },
-  {
-    id: 2,
-    title: "Kolaborasi Pemuda dalam Membangun Ekonomi Kreatif di Sendawar",
-    date: "08 Mei 2026",
-    category: "Opini",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=500&auto=format&fit=crop",
-  },
-];
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { daftarBerita } from "../data/beritaData";
+import { daftarKegiatan } from "../data/kegiatanData";
 
 export default function Berita() {
+  const navigate = useNavigate();
+  const [slideAktif, setSlideAktif] = useState(0);
+
+  // Ambil Data: 2 Kegiatan teratas untuk Slider, 3 Berita teratas untuk List
+  const dataSlider = daftarKegiatan.slice(0, 3);
+  const dataBerita = daftarBerita.slice(0, 4);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideAktif((prev) => (prev === dataSlider.length - 1 ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [dataSlider.length]);
+
   return (
-    <section className="px-[2%] mt-8 mb-12">
-      {/* Header Berita */}
-      <div className="flex items-center justify-between mb-5 px-2">
-        <div>
-          <h2 className="text-xl font-extrabold text-gray-800">
-            Berita <span className="text-[#4DA8DA]">Terbaru</span>
+    <section className="px-[4%] mt-12 mb-20 space-y-16">
+      <style>{`
+        .font-machina { font-family: 'Neue Machina', sans-serif; }
+        .sembunyikan-scrollbar::-webkit-scrollbar { display: none; }
+      `}</style>
+
+      {/* --- KEGIATAN: AUTO-SLIDER (DARI DATA PUSAT) --- */}
+      <div>
+        <div className="flex justify-between items-end mb-6">
+          <h2 className="font-machina text-2xl font-black uppercase text-slate-900 tracking-tighter italic">
+            Kegi<span className="text-[#80D8C3]">atan.</span>
           </h2>
-          <div className="h-1 w-8 bg-[#FFD66B] rounded-full mt-1"></div>
+          <div className="flex gap-1.5 mb-1">
+            {dataSlider.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-500 ${i === slideAktif ? "w-6 bg-[#80D8C3]" : "w-1.5 bg-slate-200"}`}
+              ></div>
+            ))}
+          </div>
         </div>
-        <button className="text-xs font-bold text-[#4DA8DA] hover:underline cursor-pointer">
-          Lihat Semua
-        </button>
+
+        <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-[2.5rem] shadow-2xl bg-slate-900">
+          {dataSlider.map((item, idx) => (
+            <div
+              key={item.id}
+              onClick={() => navigate(`/kegiatan/${item.id}`)}
+              className={`absolute inset-0 transition-opacity duration-1000 cursor-pointer 
+    ${
+      idx === slideAktif
+        ? "opacity-100 z-10 pointer-events-auto"
+        : "opacity-0 z-0 pointer-events-none"
+    }`}
+            >
+              <img
+                src={item.thumbnail}
+                className="w-full h-full object-cover grayscale-[0.2]"
+                alt=""
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent flex flex-col justify-end p-8">
+                <span className="text-[10px] font-black text-[#FFD66B] uppercase tracking-[0.4em] mb-2">
+                  {item.tipe} Dokumentasi
+                </span>
+                <h3 className="font-machina text-lg md:text-xl font-bold text-white">
+                  {item.judul}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Grid Berita */}
-      <div className="grid grid-cols-1 gap-6">
-        {newsList.map((news) => (
-          <article
-            key={news.id}
-            className="group overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-md transition-all hover:shadow-xl"
+      {/* --- BERITA: SCROLLABLE LIST (DARI DATA PUSAT) --- */}
+      <div>
+        <div className="flex justify-between items-end mb-8">
+          <h2 className="font-machina text-2xl font-black uppercase text-slate-900 tracking-tighter italic">
+            Warta<span className="text-[#4DA8DA]">.</span>
+          </h2>
+          <button
+            onClick={() => {
+              navigate("/berita");
+              window.scrollTo(0, 0); // Memaksa scroll ke paling atas
+            }}
+            className="text-[10px] font-black text-[#4DA8DA] uppercase border-b-2 border-[#FFD66B] pb-1"
           >
-            {/* Image Thumbnail */}
-            <div className="relative h-48 w-full overflow-hidden">
-              <img
-                src={news.image}
-                alt={news.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute top-3 left-3 bg-[#4DA8DA] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">
-                {news.category}
-              </div>
-            </div>
+            Explore
+          </button>
+        </div>
 
-            {/* Content Deskripsi */}
-            <div className="p-5">
-              <div className="flex items-center gap-2 text-gray-400 text-[11px] mb-2 font-medium">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 w-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                {news.date}
+        <div className="max-h-95 overflow-y-auto pr-2 sembunyikan-scrollbar space-y-6">
+          {dataBerita.map((item) => (
+            <article
+              key={item.id}
+              onClick={() => window.open(item.url, "_blank")}
+              className="group cursor-pointer border-b border-slate-100 pb-5 last:border-0 hover:border-[#4DA8DA]/30 transition-all"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1 h-3 bg-[#80D8C3]"></div>
+                <span className="text-[9px] font-black text-[#4DA8DA] tracking-widest uppercase">
+                  {item.tanggal}
+                </span>
               </div>
-
-              <h3 className="text-md font-bold text-gray-800 leading-snug group-hover:text-[#4DA8DA] transition-colors">
-                {news.title}
+              <h3 className="font-machina text-[15px] font-bold text-slate-800 group-hover:text-[#4DA8DA] transition-colors leading-tight">
+                {item.judul}
               </h3>
-
-              <div className="mt-4 flex items-center text-[#4DA8DA] text-xs font-bold gap-1 cursor-pointer">
-                Baca Selengkapnya
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 w-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </div>
-            </div>
-          </article>
-        ))}
+              <p className="text-[10px] text-slate-400 mt-2 line-clamp-2">
+                Sumber: {item.sumber}
+              </p>
+            </article>
+          ))}
+          <div className="h-10 w-full bg-linear-to-t from-slate-50 to-transparent -mt-10 pointer-events-none relative z-10"></div>
+        </div>
       </div>
     </section>
   );
